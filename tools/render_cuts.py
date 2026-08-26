@@ -33,7 +33,7 @@ from cutlib import AudioProbe, active_keeps, load_words, plan_clip
 
 SR = 48000  # audio build sample rate
 
-VF = {"preview": ["-vf", "scale=1280:-2,format=yuv420p"], "final": []}
+VF = {"preview": ["-vf", hwenc.PREVIEW_VF], "final": []}
 AUDIO_BITRATE = {"preview": "160k", "final": "256k"}
 
 

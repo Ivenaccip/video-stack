@@ -17,7 +17,7 @@ import hwenc
 def encode_part(src: Path, out: Path, enc: list[str], hwaccel: list[str]) -> None:
     subprocess.run(
         ["ffmpeg", "-y", "-loglevel", "error", *hwaccel, "-i", str(src),
-         "-map", "0:0", "-map", "0:1", "-vf", "scale=1280:-2,format=yuv420p",
+         "-map", "0:0", "-map", "0:1", "-vf", hwenc.PREVIEW_VF,
          *enc, "-c:a", "aac", "-b:a", "160k", str(out)],
         check=True,
     )
