@@ -8,6 +8,12 @@ h264 pero no HEVC 10-bit — por eso preview y final se resuelven por separado.
 
 import subprocess
 
+# Escala de preview/proxy compartida por make_proxy y render_cuts: acota el cuadro
+# a 1280 por su lado largo SOLO hacia abajo — fijar el ancho (scale=1280:-2)
+# upscaleaba el metraje vertical (1080x1920 -> 1280x2276) y el horizontal chico.
+PREVIEW_VF = ("scale=w='min(1280,iw)':h='min(1280,ih)'"
+              ":force_original_aspect_ratio=decrease:force_divisible_by=2,format=yuv420p")
+
 # 640x360, no menos: AMF rechaza resoluciones diminutas (~<128px) con "Init failed
 # error 5", así que un probe de 64x64 da falso negativo en máquinas AMD.
 _PROBE_SRC = ["-f", "lavfi", "-i", "color=black:size=640x360:rate=30:duration=0.1"]
